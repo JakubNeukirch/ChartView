@@ -1,6 +1,8 @@
 # ChartView
 Simple ChartView for Android.
 
+![screenshot](https://github.com/JakubNeukirch/ChartView/blob/master/Screenshot_1537704930.png)
+
 ## Usage
 Usage is shown in app/src/main/java/pl/kuben/chart/MainActivity
 
@@ -23,6 +25,9 @@ Inserting values:
                 Entry(5, System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 2),
                 Entry(1, System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3)
         )
-        ```
+```
   
   Finally entries are summed up and sorted so it does not need to be sorted or added in any special order.
+  
+  ## Site
+[www.jakubneukirch.pl link](https://jakubneukirch.pl/chartview/)
