@@ -30,4 +30,4 @@ Inserting values:
   Finally entries are summed up and sorted so it does not need to be sorted or added in any special order.
   
   ## Site
-[www.jakubneukirch.pl link](https://jakubneukirch.pl/chartview/)
+[www.jakubneukirch.pl](https://jakubneukirch.pl/chartview/)
