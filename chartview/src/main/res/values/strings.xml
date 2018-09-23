@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Chart</string>
+    <string name="value">val.</string>
+    <string name="date">date</string>
+</resources>
