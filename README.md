@@ -3,6 +3,17 @@ Simple ChartView for Android.
 
 ![screenshot](https://github.com/JakubNeukirch/ChartView/blob/master/Screenshot_1537704930.png)
 
+## Installation
+In your root build.gradle file add this:
+```
+repositories{
+    maven { url 'https://jitpack.io' }
+}
+```
+To your app module add dependency:
+```
+implementation 'com.github.JakubNeukirch:ChartView:0.5.0'
+```
 ## Usage
 Usage is shown in app/src/main/java/pl/kuben/chart/MainActivity
 
@@ -30,4 +41,4 @@ Inserting values:
   Finally entries are summed up and sorted so it does not need to be sorted or added in any special order.
   
   ## Site
-[www.jakubneukirch.pl link](https://jakubneukirch.pl/chartview/)
+[www.jakubneukirch.pl](https://jakubneukirch.pl/chartview/)
