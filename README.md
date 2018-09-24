@@ -25,6 +25,10 @@ To use it simply add PeriodicChartView to your xml. Available attributes:
 - `chartPadding: Int` - defines padding of drawed chart - default "10px"
 - `dateInterval: Enum` - defines how entries should be grouped - available "day", "week", "month" - default "day"
 
+Also available variables:
+- `fromDate: Long` - timestamp date which limits range of values
+- `toDate: Long` - timestamp date which limits range of values
+
 To add values you need to insert list of  `Entry` which has two field:
 `count: Int` - the value which it contains
 `date: Long` - timestamp of adding it
