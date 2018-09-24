@@ -12,7 +12,7 @@ repositories{
 ```
 To your app module add dependency:
 ```
-implementation 'com.github.JakubNeukirch:ChartView:0.5.0'
+implementation 'com.github.JakubNeukirch:ChartView:0.5.1'
 ```
 ## Usage
 Usage is shown in app/src/main/java/pl/kuben/chart/MainActivity
