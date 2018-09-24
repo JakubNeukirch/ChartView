@@ -10,11 +10,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val dates = listOf(
+                System.currentTimeMillis(),
+                System.currentTimeMillis() + 1000 * 60 * 60 * 24,
+                System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 2,
+                System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3
+        )
+        chart.fromDate = dates[1]
+        chart.toDate = dates[3]
         chart.entries = listOf(
-                Entry(2, System.currentTimeMillis()),
-                Entry(4, System.currentTimeMillis() + 1000 * 60 * 60 * 24),
-                Entry(5, System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 2),
-                Entry(1, System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3)
+                Entry(2, dates[0]),
+                Entry(4, dates[1]),
+                Entry(5, dates[2]),
+                Entry(1, dates[3])
         )
     }
 }

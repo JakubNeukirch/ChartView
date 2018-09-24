@@ -22,7 +22,7 @@ private const val POINTS_COUNT = 8
 private const val LINES_COUNT = 6
 private const val TEXT_MARGIN = 10
 
-private const val NO_LIMITS = -1L
+const val NO_LIMITS = -1L
 
 class PeriodicChartView : View {
 
@@ -287,7 +287,10 @@ class PeriodicChartView : View {
     private fun invalidateData() {
         val limited = toDate != NO_LIMITS && fromDate != NO_LIMITS
         groupedEntries = entries.asSequence()
-                .filter { !limited || it.date in fromDate..toDate }
+                .filter {
+                    (toDate == NO_LIMITS || it.date <= toDate)
+                            && (fromDate == NO_LIMITS || it.date >= fromDate)
+                }
                 .groupBy { it.date / groupBy } as HashMap<Long, List<Entry>>
         calculateDisplayEntries()
         val entriesCount = countEntries()
