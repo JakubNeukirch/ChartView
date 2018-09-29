@@ -12,7 +12,7 @@ repositories{
 ```
 To your app module add dependency:
 ```
-implementation 'com.github.JakubNeukirch:ChartView:0.5.0'
+implementation 'com.github.JakubNeukirch:ChartView:0.5.1'
 ```
 ## Usage
 Usage is shown in app/src/main/java/pl/kuben/chart/MainActivity
@@ -24,6 +24,10 @@ To use it simply add PeriodicChartView to your xml. Available attributes:
 - `progressColor: @IntColor Int` - defines value line color - default "blue"
 - `chartPadding: Int` - defines padding of drawed chart - default "10px"
 - `dateInterval: Enum` - defines how entries should be grouped - available "day", "week", "month" - default "day"
+
+Also available variables:
+- `fromDate: Long` - timestamp date which limits range of values
+- `toDate: Long` - timestamp date which limits range of values
 
 To add values you need to insert list of  `Entry` which has two field:
 `count: Int` - the value which it contains
