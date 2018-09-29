@@ -127,7 +127,11 @@ class PeriodicChartView : View {
                 xfermode = PorterDuffXfermode(PorterDuff.Mode.MULTIPLY)
             }
 
-    private var groupBy = GROUP_BY_SECOND
+    var groupBy = GROUP_BY_SECOND
+        set(value) {
+            field = value
+            redraw()
+        }
 
     private var bitmapPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var progressPath = Path()
@@ -147,7 +151,8 @@ class PeriodicChartView : View {
     private var canvas = Canvas(canvasBitmap)
     private var bitmapMatrix = Matrix()
 
-    private var groupedEntries = hashMapOf<Long, List<Entry>>()
+    var groupedEntries = hashMapOf<Long, List<Entry>>()
+        private set
     private var displayEntries = hashMapOf<Long, List<Entry>>()
 
     private var shouldInvalidate = false

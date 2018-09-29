@@ -9,7 +9,7 @@
     <pl.kuben.chartview.view.PeriodicChartView
         android:id="@+id/chart"
         app:valueText="value"
-        app:progressColor="#aacc33"
+        app:progressColor="#eecc33"
         android:layout_width="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

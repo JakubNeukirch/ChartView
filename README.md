@@ -42,3 +42,7 @@ Inserting values:
   
   ## Site
 [www.jakubneukirch.pl](https://jakubneukirch.pl/chartview/)
+
+## Changelog
+### 0.5.2
+Changed access modifiers for `groupBy` and `groupedEntries`
