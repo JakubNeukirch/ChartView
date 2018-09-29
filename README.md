@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/JakubNeukirch/ChartView.svg)](https://jitpack.io/#JakubNeukirch/ChartView)
+
 # ChartView
 Simple ChartView for Android.
 
@@ -12,7 +14,7 @@ repositories{
 ```
 To your app module add dependency:
 ```
-implementation 'com.github.JakubNeukirch:ChartView:0.5.1'
+implementation 'com.github.JakubNeukirch:ChartView:0.5.2'
 ```
 ## Usage
 Usage is shown in app/src/main/java/pl/kuben/chart/MainActivity
