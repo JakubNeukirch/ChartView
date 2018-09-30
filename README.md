@@ -1,7 +1,7 @@
 # ChartView
 Simple ChartView for Android.
 
-![screenshot](https://github.com/JakubNeukirch/ChartView/blob/master/Screenshot_1537704930.png)
+![screenshot](https://github.com/JakubNeukirch/ChartView/blob/master/newappearance.PNG)
 
 ## Installation
 In your root build.gradle file add this:
@@ -18,20 +18,30 @@ implementation 'com.github.JakubNeukirch:ChartView:0.5.1'
 Usage is shown in app/src/main/java/pl/kuben/chart/MainActivity
 
 To use it simply add PeriodicChartView to your xml. Available attributes:
-- `valueText: String` - identifier at the top of chart - default "val."
-- `dateText: String` - identifier for date - default "date"
-- `showText: Boolean` - defines if text should be shown, mostly used when chart is small - default "true"
-- `progressColor: @IntColor Int` - defines value line color - default "blue"
-- `chartPadding: Int` - defines padding of drawed chart - default "10px"
-- `dateInterval: Enum` - defines how entries should be grouped - available "day", "week", "month" - default "day"
+
+| name | type | description |
+| - | - | - |
+| valueText | String | identifier at the top of chart - default "val." |
+| dateText | String | identifier for date - default "date" |
+| showText | Boolean | defines if text should be shown, mostly used when chart is small - default "true" |
+| progressColor | @IntColor Int | defines value line color - default "blue" |
+| progressBackgroundColor | @IntColor Int | defines background color - default "greyish" |
+| chartPadding | Int | defines padding of drawed chart - default "10px" |
+| dateInterval | Enum | defines how entries should be grouped - available "day", "week", "month" - default "day" |
 
 Also available variables:
-- `fromDate: Long` - timestamp date which limits range of values
-- `toDate: Long` - timestamp date which limits range of values
+| name | type | description |
+| - | - | - |
+| fromDate | Long | timestamp date which limits range of values |
+| toDate | Long | timestamp date which limits range of values |
 
 To add values you need to insert list of  `Entry` which has two field:
-`count: Int` - the value which it contains
-`date: Long` - timestamp of adding it
+
+| name | type | description |
+| - | - | - |
+| count | Int | the value which it contains |
+| date | Long | timestamp of adding it |
+
 Inserting values:
 ```kotlin
         chart.entries = listOf(
@@ -48,5 +58,10 @@ Inserting values:
 [www.jakubneukirch.pl](https://jakubneukirch.pl/chartview/)
 
 ## Changelog
+
 ### 0.5.2
 Changed access modifiers for `groupBy` and `groupedEntries`
+
+### 0.5.3
+Added `progressBackgroundColor`
+Improved appearance

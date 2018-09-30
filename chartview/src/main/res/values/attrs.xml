@@ -5,6 +5,7 @@
         <attr name="dateText" format="string" />
         <attr name="showText" format="boolean" />
         <attr name="progressColor" format="color" />
+        <attr name="progressBackgroundColor" format="color" />
         <attr name="chartPadding" format="dimension" />
         <attr name="dateInterval" format="enum">
             <enum name="day" value="1" />

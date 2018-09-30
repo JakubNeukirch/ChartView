@@ -64,7 +64,7 @@ class PeriodicChartView : View {
         set(value) {
             field = value
             progressPaint.color = value
-            fillPaint.color = value
+            circleStrokePaint.color = value
             redraw()
         }
 
@@ -80,9 +80,14 @@ class PeriodicChartView : View {
             redraw()
         }
 
-    private var points = listOf<Point>()
+    var progressBackgroundColor: Int = ContextCompat.getColor(context, R.color.standardBackground)
+        set(value) {
+            field = value
+            clearPaint.color = value
+            redraw()
+        }
 
-    private var progressBackgroundColor: Int = ContextCompat.getColor(context, R.color.standardBackground)
+    private var points = listOf<Point>()
 
     private val framePaint = Paint(Paint.ANTI_ALIAS_FLAG)
             .apply {
@@ -101,10 +106,16 @@ class PeriodicChartView : View {
                 strokeWidth = PROGRESS_STROKE_WIDTH
             }
 
+    private val circleStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+            .apply {
+                color = progressColor
+                style = Paint.Style.STROKE
+                strokeWidth = 6f
+            }
+
     private val fillPaint = Paint(Paint.ANTI_ALIAS_FLAG)
             .apply {
                 color = Color.WHITE
-                strokeWidth = 0f
                 style = Paint.Style.FILL
             }
 
@@ -119,9 +130,15 @@ class PeriodicChartView : View {
                 color = ContextCompat.getColor(context, R.color.textColor)
             }
 
+    private val labelsPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+            .apply {
+                textSize = context.resources.getDimension(R.dimen.text_label_size)
+                color = ContextCompat.getColor(context, R.color.labelColor)
+            }
+
     private val linePaint = Paint(Paint.ANTI_ALIAS_FLAG)
             .apply {
-                color = Color.BLACK
+                color = ContextCompat.getColor(context, R.color.scaleLine)
                 strokeWidth = 2f
                 style = Paint.Style.STROKE
                 xfermode = PorterDuffXfermode(PorterDuff.Mode.MULTIPLY)
@@ -163,6 +180,7 @@ class PeriodicChartView : View {
         valueText = array.getString(R.styleable.PeriodicChartView_valueText) ?: context.getString(R.string.value)
         dateText = array.getString(R.styleable.PeriodicChartView_dateText) ?: context.getString(R.string.date)
         progressColor = array.getColor(R.styleable.PeriodicChartView_progressColor, Color.BLUE)
+        progressBackgroundColor = array.getColor(R.styleable.PeriodicChartView_progressBackgroundColor, Color.BLUE)
         padding = array.getDimensionPixelSize(R.styleable.PeriodicChartView_chartPadding, 10)
         showText = array.getBoolean(R.styleable.PeriodicChartView_showText, true)
         groupBy = when (array.getInt(R.styleable.PeriodicChartView_dateInterval, 1)) {
@@ -183,10 +201,11 @@ class PeriodicChartView : View {
     private fun redraw() {
         invalidateData()
         canvas.drawColor(progressBackgroundColor)
+        drawScale()
         drawProgress()
         drawPoints()
         drawFrame()
-        drawScale()
+        drawScaleTexts()
         drawLabels()
         if (shouldInvalidate) {
             invalidate()
@@ -217,17 +236,23 @@ class PeriodicChartView : View {
 
     private fun drawScale() {
         var y: Float
+        getValues().forEachIndexed { index, _ ->
+            if (index != 0) {
+                y = canvas.height - (index * verticalSpace) - innerMarginBottom
+                canvas.drawLine(innerMarginLeft.toFloat(), y, canvas.width.toFloat(), y, linePaint)
+            }
+        }
+    }
+
+    private fun drawScaleTexts() {
         if (showText) {
             val bounds = Rect()
-            textPaint.getTextBounds(valueText, 0, valueText.length, bounds)
-            canvas.drawText(valueText, padding.toFloat(), padding + bounds.height().toFloat(), textPaint)
-        }
-        getValues().forEachIndexed { index, value ->
-            y = canvas.height - (index * verticalSpace) - innerMarginBottom
-            if (showText) {
+            labelsPaint.getTextBounds(valueText, 0, valueText.length, bounds)
+            canvas.drawText(valueText, padding.toFloat(), padding + bounds.height().toFloat(), labelsPaint)
+            getValues().forEachIndexed { index, value ->
+                y = canvas.height - (index * verticalSpace) - innerMarginBottom
                 canvas.drawText(value, padding.toFloat(), y, textPaint)
             }
-            canvas.drawLine(innerMarginLeft.toFloat(), y, canvas.width.toFloat(), y, linePaint)
         }
     }
 
@@ -273,15 +298,15 @@ class PeriodicChartView : View {
                         textPaint
                 )
             }
-            textPaint.getTextBounds(dateText, 0, dateText.length, bounds)
-            canvas.drawText(dateText, canvas.width - bounds.width().toFloat(), y, textPaint)
+            labelsPaint.getTextBounds(dateText, 0, dateText.length, bounds)
+            canvas.drawText(dateText, canvas.width - bounds.width().toFloat(), y, labelsPaint)
         }
     }
 
     private fun drawPoints() {
         points.forEach {
             canvas.drawCircle(it.x, it.y, pointRadius, fillPaint)
-            canvas.drawCircle(it.x, it.y, pointRadius + 1f, progressPaint)
+            canvas.drawCircle(it.x, it.y, pointRadius + 1f, circleStrokePaint)
         }
     }
 
@@ -290,7 +315,6 @@ class PeriodicChartView : View {
     }
 
     private fun invalidateData() {
-        val limited = toDate != NO_LIMITS && fromDate != NO_LIMITS
         groupedEntries = entries.asSequence()
                 .filter {
                     (toDate == NO_LIMITS || it.date <= toDate)
