@@ -180,7 +180,7 @@ class PeriodicChartView : View {
         valueText = array.getString(R.styleable.PeriodicChartView_valueText) ?: context.getString(R.string.value)
         dateText = array.getString(R.styleable.PeriodicChartView_dateText) ?: context.getString(R.string.date)
         progressColor = array.getColor(R.styleable.PeriodicChartView_progressColor, Color.BLUE)
-        progressBackgroundColor = array.getColor(R.styleable.PeriodicChartView_progressBackgroundColor, Color.BLUE)
+        progressBackgroundColor = array.getColor(R.styleable.PeriodicChartView_progressBackgroundColor, progressBackgroundColor)
         padding = array.getDimensionPixelSize(R.styleable.PeriodicChartView_chartPadding, 10)
         showText = array.getBoolean(R.styleable.PeriodicChartView_showText, true)
         groupBy = when (array.getInt(R.styleable.PeriodicChartView_dateInterval, 1)) {

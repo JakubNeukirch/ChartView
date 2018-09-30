@@ -67,3 +67,6 @@ Changed access modifiers for `groupBy` and `groupedEntries`
 ### 0.5.3
 Added `progressBackgroundColor`
 Improved appearance
+
+### 0.5.4
+Fixed `progressBackgroundColor`
