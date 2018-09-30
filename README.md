@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/JakubNeukirch/ChartView.svg)](https://jitpack.io/#JakubNeukirch/ChartView)
+
 # ChartView
 Simple ChartView for Android.
 
