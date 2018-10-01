@@ -249,6 +249,7 @@ class PeriodicChartView : View {
             val bounds = Rect()
             labelsPaint.getTextBounds(valueText, 0, valueText.length, bounds)
             canvas.drawText(valueText, padding.toFloat(), padding + bounds.height().toFloat(), labelsPaint)
+            var y: Float
             getValues().forEachIndexed { index, value ->
                 y = canvas.height - (index * verticalSpace) - innerMarginBottom
                 canvas.drawText(value, padding.toFloat(), y, textPaint)

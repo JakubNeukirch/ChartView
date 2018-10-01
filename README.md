@@ -70,3 +70,6 @@ Improved appearance
 
 ### 0.5.4
 Fixed `progressBackgroundColor`
+
+### 0.5.5
+Fixed positioning
