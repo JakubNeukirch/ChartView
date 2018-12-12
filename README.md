@@ -73,3 +73,6 @@ Fixed `progressBackgroundColor`
 
 ### 0.5.5
 Fixed positioning
+
+### 0.5.6
+[WIP] Add `tendencious` field which indicates whether should be shown as tendecies or or not. (for now just hour tendecies)

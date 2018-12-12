@@ -7,10 +7,15 @@
         <attr name="progressColor" format="color" />
         <attr name="progressBackgroundColor" format="color" />
         <attr name="chartPadding" format="dimension" />
+        <attr name="periodMode" format="enum">
+            <enum name="date" value="1" />
+            <enum name="hour" value="2" />
+        </attr>
         <attr name="dateInterval" format="enum">
             <enum name="day" value="1" />
             <enum name="week" value="2" />
             <enum name="month" value="3" />
+            <enum name="hour" value="4" />
         </attr>
     </declare-styleable>
 </resources>

@@ -12,12 +12,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val dates = listOf(
                 System.currentTimeMillis(),
-                System.currentTimeMillis() + 1000 * 60 * 60 * 24,
-                System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 2,
-                System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 3
+                System.currentTimeMillis() + 1000 * 60 * 60 * 3,
+                System.currentTimeMillis() + 1000 * 60 * 60 * 3,
+                System.currentTimeMillis() + 1000 * 60 * 60 * 4,
+                System.currentTimeMillis() + 1000 * 60 * 60 * 4,
+                System.currentTimeMillis() + 1000 * 60 * 60 * 4
         )
-        chart.fromDate = dates[1]
-        chart.toDate = dates[3]
+        chart.tendentious = true
         chart.entries = listOf(
                 Entry(2, dates[0]),
                 Entry(4, dates[1]),

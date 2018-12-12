@@ -11,10 +11,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.min
 
+private const val GROUP_BY_HOUR: Long = 3600000
 private const val GROUP_BY_DAY: Long = 3600000 * 24
 private const val GROUP_BY_WEEK: Long = 3600000 * 24 * 7
 private const val GROUP_BY_MONTH: Long = 3600000 * 24 * 30L
 private const val GROUP_BY_SECOND: Long = 1000L
+private const val PERIOD_MODE_DATE = 1
+private const val PERIOD_MODE_HOUR = 2
 private const val MARGIN_HEIGHT_DIVIDER = 8
 private const val FRAME_STROKE_WIDTH = 3f
 private const val PROGRESS_STROKE_WIDTH = 8f
@@ -150,6 +153,18 @@ class PeriodicChartView : View {
             redraw()
         }
 
+    var periodMode = PERIOD_MODE_DATE
+        set(value) {
+            field = value
+            redraw()
+        }
+
+    var tendentious: Boolean = false
+        set(value) {
+            field = value
+            redraw()
+        }
+
     private var bitmapPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var progressPath = Path()
 
@@ -183,10 +198,12 @@ class PeriodicChartView : View {
         progressBackgroundColor = array.getColor(R.styleable.PeriodicChartView_progressBackgroundColor, progressBackgroundColor)
         padding = array.getDimensionPixelSize(R.styleable.PeriodicChartView_chartPadding, 10)
         showText = array.getBoolean(R.styleable.PeriodicChartView_showText, true)
+        periodMode = array.getInt(R.styleable.PeriodicChartView_dateInterval, PERIOD_MODE_DATE)
         groupBy = when (array.getInt(R.styleable.PeriodicChartView_dateInterval, 1)) {
             1 -> GROUP_BY_DAY
             2 -> GROUP_BY_WEEK
             3 -> GROUP_BY_MONTH
+            4 -> GROUP_BY_HOUR
             else -> GROUP_BY_DAY
         }
         array.recycle()
@@ -262,8 +279,7 @@ class PeriodicChartView : View {
         var max: Int = getValues().map {
             textPaint.getTextBounds(it, 0, it.length, bounds)
             bounds.width()
-        }
-                .max() ?: 0
+        }.max() ?: 0
 
         textPaint.getTextBounds(valueText, 0, valueText.length, bounds)
         max = if (max < bounds.width()) bounds.width() else max
@@ -289,7 +305,11 @@ class PeriodicChartView : View {
             val bounds = Rect()
             var text: String
             for (i in 0..(min(displayEntries.size, POINTS_COUNT) - 1)) {
-                text = (displayEntries.keys.toList()[i] * groupBy).toDateString()
+                text = if(!tendentious) {
+                    (displayEntries.keys.toList()[i] * groupBy).toDateString()
+                } else {
+                    "${displayEntries.keys.toList()[i]}:00"
+                }
                 textPaint.getTextBounds(text, 0, text.length, bounds)
                 x = innerMarginLeft + (i * space)
                 canvas.drawText(
@@ -316,12 +336,24 @@ class PeriodicChartView : View {
     }
 
     private fun invalidateData() {
+        when (periodMode) {
+            PERIOD_MODE_DATE -> {
+
+            }
+        }
         groupedEntries = entries.asSequence()
                 .filter {
                     (toDate == NO_LIMITS || it.date <= toDate)
                             && (fromDate == NO_LIMITS || it.date >= fromDate)
                 }
-                .groupBy { it.date / groupBy } as HashMap<Long, List<Entry>>
+                .groupBy {
+                    return@groupBy if(!tendentious) {
+                        it.date / groupBy
+                    } else {
+                        it.date.getHour().toLong()
+                    }
+
+                } as HashMap<Long, List<Entry>>
         calculateDisplayEntries()
         val entriesCount = countEntries()
         maxValue = entriesCount.max() ?: 0
@@ -449,5 +481,11 @@ class PeriodicChartView : View {
         val date = Date()
         date.time = this
         return dateFormat.format(date)
+    }
+
+    private fun Long.getHour(): Int {
+        return GregorianCalendar.getInstance()
+                .apply { timeInMillis = this@getHour }
+                .get(GregorianCalendar.HOUR_OF_DAY)
     }
 }
