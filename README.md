@@ -14,7 +14,7 @@ repositories{
 ```
 To your app module add dependency:
 ```
-implementation 'com.github.JakubNeukirch:ChartView:0.5.5'
+implementation 'com.github.JakubNeukirch:ChartView:0.5.7'
 ```
 ## Usage
 Usage is shown in app/src/main/java/pl/kuben/chart/MainActivity
@@ -75,4 +75,7 @@ Fixed `progressBackgroundColor`
 Fixed positioning
 
 ### 0.5.6
-[WIP] Add `tendencious` field which indicates whether should be shown as tendecies or or not. (for now just hour tendecies)
+[WIP] Add `tendentious` field which indicates whether should be shown as trends or or not. (for now just hour trends)
+
+### 0.5.7
+Add sorting by hour when tendencies are ON. Add possibility to change count of points on chart

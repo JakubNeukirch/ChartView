@@ -12,10 +12,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val dates = listOf(
                 System.currentTimeMillis(),
+                System.currentTimeMillis() + 1000 * 60 * 60 * 7,
                 System.currentTimeMillis() + 1000 * 60 * 60 * 3,
-                System.currentTimeMillis() + 1000 * 60 * 60 * 3,
-                System.currentTimeMillis() + 1000 * 60 * 60 * 4,
-                System.currentTimeMillis() + 1000 * 60 * 60 * 4,
                 System.currentTimeMillis() + 1000 * 60 * 60 * 4
         )
         chart.tendentious = true

@@ -90,6 +90,12 @@ class PeriodicChartView : View {
             redraw()
         }
 
+    var pointsCount = POINTS_COUNT
+        set(value) {
+            field = value
+            redraw()
+        }
+
     private var points = listOf<Point>()
 
     private val framePaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -185,7 +191,7 @@ class PeriodicChartView : View {
 
     var groupedEntries = hashMapOf<Long, List<Entry>>()
         private set
-    private var displayEntries = hashMapOf<Long, List<Entry>>()
+    private var displayEntries = sortedMapOf<Long, List<Entry>>()
 
     private var shouldInvalidate = false
 
@@ -304,7 +310,7 @@ class PeriodicChartView : View {
             val y = canvas.height.toFloat()
             val bounds = Rect()
             var text: String
-            for (i in 0..(min(displayEntries.size, POINTS_COUNT) - 1)) {
+            for (i in 0..(min(displayEntries.size, pointsCount) - 1)) {
                 text = if(!tendentious) {
                     (displayEntries.keys.toList()[i] * groupBy).toDateString()
                 } else {
@@ -365,12 +371,12 @@ class PeriodicChartView : View {
     }
 
     private fun calculateDisplayEntries() {
-        if (groupedEntries.size <= POINTS_COUNT) {
-            displayEntries = groupedEntries
+        if (groupedEntries.size <= pointsCount) {
+            displayEntries = groupedEntries.toSortedMap()
         } else {
-            val count = groupedEntries.size / POINTS_COUNT
-            var rest = groupedEntries.size % POINTS_COUNT
-            displayEntries = hashMapOf()
+            val count = groupedEntries.size / pointsCount
+            var rest = groupedEntries.size % pointsCount
+            displayEntries = sortedMapOf()
             var add = 0
             var entryItem: Pair<Long, List<Entry>>
             var toAddItem = listOf<Entry>()
@@ -442,7 +448,7 @@ class PeriodicChartView : View {
                 RectF(padding.toFloat(), padding.toFloat(), width - 2f * padding, height - 2f * padding),
                 Matrix.ScaleToFit.START
         )
-        space = (canvasBitmap.width - innerMarginLeft) / POINTS_COUNT.toFloat()
+        space = (canvasBitmap.width - innerMarginLeft) / pointsCount.toFloat()
         val height = (canvasBitmap.height - innerMarginBottom)
         progressMarginTop = Math.round(height.toFloat() / MARGIN_HEIGHT_DIVIDER)
         verticalSpace = (height - progressMarginTop) / LINES_COUNT.toFloat()
